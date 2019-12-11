@@ -139,7 +139,7 @@ class Planner {
     /**
      * A ring buffer of moves described in steps
      */
-     static millis_t time_fan_change;
+    static millis_t time_fan_change;
 	static block_t block_buffer[BLOCK_BUFFER_SIZE];
     static volatile uint8_t block_buffer_head,  // Index of the next block to be pushed
                             block_buffer_tail;
@@ -228,7 +228,7 @@ class Planner {
     Planner();
 
     void init();
-	 static millis_t getFanChangeTime();
+	static millis_t getFanChangeTime();
 
     /**
      * Static (class) Methods
