@@ -74,8 +74,8 @@
  * If you get false positives for "Thermal Runaway" increase THERMAL_PROTECTION_HYSTERESIS and/or THERMAL_PROTECTION_PERIOD
  */
 #if ENABLED(THERMAL_PROTECTION_HOTENDS)
-  #define THERMAL_PROTECTION_PERIOD 3       // Seconds-
-  #define THERMAL_PROTECTION_HYSTERESIS 15     // Degrees Celsius
+  #define THERMAL_PROTECTION_PERIOD 3         // Seconds
+  #define THERMAL_PROTECTION_HYSTERESIS 15    // Degrees Celsius
 
   /**
    * Whenever an M104 or M109 increases the target temperature the firmware will wait for the
@@ -205,10 +205,7 @@
 
 
 //Max model cooling fan present setting  FOR I3 MEGA,the max value is 1
-
 #define MAX_MODEL_COOLING_PRECENT_VALUE 0.7 // the max present is 70%
-
-
 
 // @section extruder
 

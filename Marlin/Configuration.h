@@ -1,4 +1,3 @@
-
 /**
  * Marlin 3D Printer Firmware
  * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -53,9 +52,7 @@
 #define CONFIGURATION_H_VERSION 010100
 
 #define MSG_MY_VERSION "V1.2.3" //2019.5.10
-
 #define OutageTest  //断电续打
-
 #define TFTmodel
 
 //===========================================================================
@@ -321,9 +318,9 @@
 
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
   // Ultimaker
-  #define  DEFAULT_Kp   15.96//10//15.67
-  #define  DEFAULT_Ki   0.41// 0.54// 0.94
-  #define  DEFAULT_Kd   58.49   //60.42//65.46
+  #define  DEFAULT_Kp   15.96
+  #define  DEFAULT_Ki   0.41
+  #define  DEFAULT_Kd   58.49
 
   // MakerGear
   //#define  DEFAULT_Kp 7.0
@@ -369,7 +366,6 @@
   #define  DEFAULT_bedKi .823
   #define  DEFAULT_bedKd 305.4
   
-
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //from pidautotune
 //  #define  DEFAULT_bedKp 97.1
@@ -460,11 +456,6 @@
   //#define ENDSTOPPULLUP_ZMIN_PROBE
 #endif
 
-
-
-
-
-
 // Mechanical endstop with COM to ground and NC to Signal uses "false" here (most common setup).
 #define X_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
 #define Y_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
@@ -514,7 +505,6 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2[, E3]]]
  */
-//#define DEFAULT_MAX_ACCELERATION      { 9000, 9000, 60, 10000 }
 #define DEFAULT_MAX_ACCELERATION      { 700, 700, 70, 15000 }
 
 /**
@@ -525,14 +515,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-//#define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves
-//#define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
-//#define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
-
-#define DEFAULT_ACCELERATION          700//1000    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_ACCELERATION          700    // X, Y, Z and E acceleration for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  700    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   700//1000    // X, Y, Z acceleration for travel (non printing) moves
-
+#define DEFAULT_TRAVEL_ACCELERATION   700    // X, Y, Z acceleration for travel (non printing) moves
 
 /** 
  * Default Jerk (mm/s)
@@ -544,7 +529,7 @@
 #define DEFAULT_XJERK                 8.2
 #define DEFAULT_YJERK                 8.2
 #define DEFAULT_ZJERK                 0.2
-#define DEFAULT_EJERK                10//20.0
+#define DEFAULT_EJERK                10.0
 
 
 //===========================================================================
@@ -746,7 +731,7 @@
 //===========================================================================
 //========================= Filament Runout Sensor ==========================
 //===========================================================================
-//去掉注释，即可开启缺料检测功能。一般使用光电限位开关装在送丝机耗材入口处，高电平表示正常送丝，低电平表示缺料�?//#define FILAMENT_RUNOUT_SENSOR// Uncomment for defining a filament runout sensor such as a mechanical or opto endstop to check the existence of filament
+//#define FILAMENT_RUNOUT_SENSOR // Uncomment for defining a filament runout sensor such as a mechanical or opto endstop to check the existence of filament
                                  // RAMPS-based boards use SERVO3_PIN. For other boards you may need to define FIL_RUNOUT_PIN.
                                  // It is assumed that when logic high = filament available
                                  //                    when logic  low = filament ran out
@@ -899,16 +884,11 @@
 //#define Z_SAFE_HOMING
 
 #if ENABLED(Z_SAFE_HOMING)
-//  #define Z_SAFE_HOMING_X_POINT ((X_MIN_POS + X_MAX_POS) / 2)    // X point for Z homing when homing all axis (G28).
-//  #define Z_SAFE_HOMING_Y_POINT ((Y_MIN_POS + Y_MAX_POS) / 2)    // Y point for Z homing when homing all axis (G28).
   #define Z_SAFE_HOMING_X_POINT (15)    // X point for Z homing when homing all axis (G28).
   #define Z_SAFE_HOMING_Y_POINT (40)    // Y point for Z homing when homing all axis (G28).
 #endif
 
 // Homing speeds (mm/m)
-//#define HOMING_FEEDRATE_XY (50*60)
-//#define HOMING_FEEDRATE_Z  (10*60)
-
 #define HOMING_FEEDRATE_XY (40*60)
 #define HOMING_FEEDRATE_Z  (6*60)
 

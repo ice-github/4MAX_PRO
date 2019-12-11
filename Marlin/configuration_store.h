@@ -54,17 +54,6 @@ extern unsigned char FirstBootFlag;
 void SaveFirstBootFlag();
 void readFirstBootFlag();
 
-
-
-
-
-
-
-
-
-
-
-
 #if DISABLED(DISABLE_M503)
   void Config_PrintSettings(bool forReplay=false);
 #else

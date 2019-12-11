@@ -137,15 +137,6 @@
 uint16_t eeprom_checksum;
 const char version[4] = EEPROM_VERSION;
 
-
-
-
-
-
-
-
-
-
 void _EEPROM_writeData(int &pos, uint8_t* value, uint8_t size) {
   uint8_t c;
   while (size--) {
