@@ -557,10 +557,7 @@ float Temperature::get_pid_output(int e) {
         temp_iState[HOTEND_INDEX] += pid_error[HOTEND_INDEX];
         iTerm[HOTEND_INDEX] = PID_PARAM(Ki, HOTEND_INDEX) * temp_iState[HOTEND_INDEX];
 
-
         pid_output = pTerm[HOTEND_INDEX] + iTerm[HOTEND_INDEX] - dTerm[HOTEND_INDEX];
-
-		//SERIAL_PROTOCOL(pTerm[HOTEND_INDEX]);SERIAL_PROTOCOL(" ");SERIAL_PROTOCOL(iTerm[HOTEND_INDEX]);SERIAL_PROTOCOL(" ");SERIAL_PROTOCOLLN(- dTerm[HOTEND_INDEX]); //2019.3.25 大熊添加，为了查看PID参数
 
         #if ENABLED(PID_EXTRUSION_SCALING)
           cTerm[HOTEND_INDEX] = 0;
@@ -1177,13 +1174,9 @@ void Temperature::init() {
     if (degHotend(HOTEND_INDEX) < degTargetHotend(HOTEND_INDEX) - (WATCH_TEMP_INCREASE + TEMP_HYSTERESIS + 1)) {
       watch_target_temp[HOTEND_INDEX] = degHotend(HOTEND_INDEX) + WATCH_TEMP_INCREASE;
       watch_heater_next_ms[HOTEND_INDEX] = millis() + (WATCH_TEMP_PERIOD) * 1000UL;
-	  //SERIAL_PROTOCOLLN(" *** watching heat up ************* ");
     }
     else
-    	{
-    	//SERIAL_PROTOCOLLN(" *** heat up over ************* ");
          watch_heater_next_ms[HOTEND_INDEX] = 0;
-    	}
   }
 #endif
 
@@ -1219,8 +1212,8 @@ void Temperature::init() {
 
     static float tr_target_temperature[HOTENDS + 1] = { 0.0 };
 	static char reset_temperature_mark[HOTENDS + 1] = {0};
-	   static millis_t  timer_save[HOTENDS + 1] = {0};
-	   	 millis_t  ltemp  = 0;
+	static millis_t timer_save[HOTENDS + 1] = {0};
+	millis_t ltemp  = 0;
 
     /**
         SERIAL_ECHO_START;
@@ -1239,8 +1232,7 @@ void Temperature::init() {
     if (tr_target_temperature[heater_index] != target_temperature) {
       tr_target_temperature[heater_index] = target_temperature;
       *state = target_temperature > 0 ? TRFirstHeating : TRInactive;
-	  reset_temperature_mark[heater_index] = 1; 	
-
+	  reset_temperature_mark[heater_index] = 1;
     }
 
     switch (*state) {
@@ -1252,40 +1244,28 @@ void Temperature::init() {
         if (temperature < tr_target_temperature[heater_index]) break;
         *state = TRStable;
       // While the temperature is stable watch for a bad temperature
-      case TRStable:
-	  
-	  	ltemp =  millis() ;
-	  	
-           if (temperature < tr_target_temperature[heater_index] ) {
-			if(reset_temperature_mark[heater_index]==1 && heater_index == 0)
-				 {
+      case TRStable:	  
+	  	ltemp =  millis() ; 	
+        if (temperature < tr_target_temperature[heater_index] ) {
+		  if(reset_temperature_mark[heater_index]==1 && heater_index == 0) {
 					 timer_save[heater_index] = ltemp +100000;  
 					 reset_temperature_mark[heater_index]=0;
-				}
-				 
-}
-
-			
-			
-
-							   
+		  }		 
+        }						   
         if (temperature >= tr_target_temperature[heater_index] - hysteresis_degc) {
           *timer = millis() + period_seconds * 1000UL;
 		            break;
         }
         else{
 
-			if(ltemp < timer_save[heater_index]||ltemp - planner.getFanChangeTime()<100000)
-		   {
+		  if(ltemp < timer_save[heater_index]||ltemp - planner.getFanChangeTime()<100000) {
 			   *timer = ltemp + period_seconds * 1000UL;
 		    break;
-	       }
-			if (PENDING(millis(), *timer))
-				{
+	      }
+		  if (PENDING(millis(), *timer)) {
 					break;
-				}
-
-        	}
+		  }
+        }
         *state = TRRunaway;
       case TRRunaway:
       {
@@ -1613,6 +1593,7 @@ void Temperature::isr() {
         #endif
       #endif
     }
+
     if (soft_pwm_0 < pwm_count) WRITE_HEATER_0(0);   
     #if HOTENDS > 1
       if (soft_pwm_1 < pwm_count) WRITE_HEATER_1(0);
@@ -1648,9 +1629,9 @@ void Temperature::isr() {
     // 3:                / 16 =  61.0352 Hz
     // 4:                /  8 = 122.0703 Hz
     // 5:                /  4 = 244.1406 Hz
-
     pwm_count += _BV(SOFT_PWM_SCALE);
     pwm_count &= 0x7F;
+
   #else // SLOW_PWM_HEATERS
 
     /**
@@ -1758,6 +1739,7 @@ void Temperature::isr() {
     // 5:                /  4 = 244.1406 Hz
     pwm_count += _BV(SOFT_PWM_SCALE);  
     pwm_count &= 0x7F;
+
     // increment slow_pwm_count only every 64 pwm_count (e.g., every 8s)
     if ((pwm_count % 64) == 0) {
       slow_pwm_count++;
