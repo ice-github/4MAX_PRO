@@ -151,8 +151,6 @@ FORCE_INLINE void serialprintPGM(const char* str) {
   while (char ch = pgm_read_byte(str++)) MYSERIAL.write(ch);
 }
 
-
-
 void idle(
   #if ENABLED(FILAMENT_CHANGE_FEATURE)
     bool no_stepper_sleep = false  // pass true to keep steppers from disabling on timeout
