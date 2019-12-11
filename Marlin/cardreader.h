@@ -28,9 +28,7 @@
 
 extern char TFTresumingflag;
 extern bool pauseCMDsendflag;
-
 extern bool powerOFFflag;
-
 
 #if ENABLED(SDSUPPORT)
 
@@ -62,7 +60,6 @@ public:
   void getStatus();
   void printingHasFinished();
 
-  
   void TFTStopPringing(); 
   void TFTgetStatus();
   void Myls(); 
@@ -79,10 +76,7 @@ public:
   void ls();
   void chdir(const char *relpath);
   void updir();
-  void setroot();
-
-     
-    
+  void setroot();   
 
   FORCE_INLINE void pauseSDPrint() {pauseCMDsendflag=true;TFTresumingflag=true; sdprinting = false; }
   FORCE_INLINE bool isFileOpen() { return file.isOpen(); }

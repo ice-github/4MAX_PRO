@@ -40,7 +40,6 @@ extern char sdcardstartprintingflag;
 extern int16_t filenumber;
 
 
-
 CardReader::CardReader() {
   sdprinting = cardOK = saving = logging = false;
   filesize = 0;
@@ -216,14 +215,6 @@ void  CardReader::lsDive(const char *prepend,SdFile parent, const char * const m
   }
 }
 
-
-
-
-
-
-
-
-
 void CardReader::ls()  {
   lsAction = LS_SerialPrint;
   root.rewind();
@@ -372,8 +363,6 @@ void CardReader::stopSDPrint() {
   if (isFileOpen()) file.close();
 }
 
-
-
 void CardReader::TFTStopPringing()
 {
   sdprinting = false;
@@ -405,8 +394,6 @@ void CardReader::TFTgetStatus()
 //  }
 }
 
-
-
 void CardReader::openLogFile(char* name) {
   logging = true;
   openFile(name, false);
@@ -424,7 +411,6 @@ void CardReader::getAbsFilename(char *t) {
   else
     t[0] = 0;
 }
-
 
 void CardReader::openFile(char* name, bool read, bool push_current/*=false*/) {
 
@@ -648,7 +634,6 @@ void CardReader::getStatus() {
     SERIAL_PROTOCOLLNPGM(MSG_SD_NOT_PRINTING);
   }
 }
-
 
 void CardReader::write_command(char *buf) {
   char* begin = buf;
