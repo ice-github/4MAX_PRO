@@ -34,9 +34,6 @@
 char FlagResumFromOutage=0;
 extern unsigned char ResumingFlag;
 
-
-
-
 #if HAS_BUZZER && DISABLED(LCD_USE_I2C_BUZZER)
   #include "buzzer.h"
 #endif
@@ -2720,11 +2717,12 @@ bool lcd_blink() {
  * No worries. This function is only called from the main thread.
  */
 void lcd_update() {
- static int counter = 0 ;
+  static int counter = 0 ;
 /*  
   #if ENABLED(ULTIPANEL)
     static millis_t return_to_status_ms = 0;
     manage_manual_move();
+
     lcd_buttons_update();
 
     // If the action button is pressed...
@@ -2763,6 +2761,7 @@ void lcd_update() {
         TFT_SERIAL_ENTER();
         #endif
       }
+
       lcd_sd_status = sd_status;
       /*
       lcdDrawUpdate = LCDVIEW_CLEAR_CALL_REDRAW;
