@@ -6,6 +6,7 @@
  * Copyright (C) 2011 Camiel Gubbels / Erik van der Zalm
  *
  * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
@@ -2109,7 +2110,6 @@ inline void get_serial_commands() {
   while (commands_in_queue < BUFSIZE && MYSERIAL.available() > 0) {
 
     char serial_char = MYSERIAL.read();
-	//NewSerial.write(serial_char);//2019.5.5
 
     /**
      * If the character ends the line
@@ -3980,9 +3980,7 @@ void gcode_get_destination() {
     if (code_seen(axis_codes[i]))
       destination[i] = code_value_axis_units(i) + (axis_relative_modes[i] || relative_mode ? current_position[i] : 0);
     else
-     { destination[i] = current_position[i];
-     }
-     
+      destination[i] = current_position[i];
   }
 
   if (code_seen('F') && code_value_linear_units() > 0.0)
@@ -4581,6 +4579,7 @@ inline void gcode_G4() {
  *
  */
 inline void gcode_G28() {
+
   #if ENABLED(DEBUG_LEVELING_FEATURE)
     if (DEBUGGING(LEVELING)) {
       SERIAL_ECHOLNPGM(">>> gcode_G28");
@@ -4590,6 +4589,7 @@ inline void gcode_G28() {
 
   // Wait for planner moves to finish!
   stepper.synchronize();
+
   // For auto bed leveling, clear the level matrix
   #if HAS_ABL
     reset_bed_level();
@@ -4701,6 +4701,7 @@ inline void gcode_G28() {
         // Always home the 2nd (right) extruder first
         active_extruder = 1;
         HOMEAXIS(X);
+
         // Remember this extruder's position for later tool change
         inactive_extruder_x_pos = RAW_X_POSITION(current_position[X_AXIS]);
 
@@ -4716,6 +4717,7 @@ inline void gcode_G28() {
       #else
 
         HOMEAXIS(X);      
+
       #endif
 
       #if ENABLED(DEBUG_LEVELING_FEATURE)
@@ -4801,6 +4803,7 @@ inline void gcode_G28() {
       }
     }
   #endif
+
   clean_up_after_endstop_or_probe_move();
 
   #if ENABLED(DEBUG_LEVELING_FEATURE)
@@ -4813,13 +4816,7 @@ inline void gcode_G28() {
   #endif
 
   report_current_position();
-//  if(AssistLeveTestflag) HomeFlag=1;
 }
-
-
-
-
-
 
 #if HAS_PROBING_PROCEDURE
 
@@ -6540,11 +6537,9 @@ inline void gcode_M105() {
    *  P<index> Fan index, if more than one fan
    */
   inline void gcode_M106() {
-  //  uint16_t s = code_seen('S') ? code_value_ushort() : 255,
       uint16_t s = code_seen('S') ? code_value_ushort() : 179,
              p = code_seen('P') ? code_value_ushort() : 0;
     NOMORE(s, Max_ModelCooling);
- //   NOMORE(s, 179);
     if (p < FAN_COUNT) fanSpeeds[p] = s;
   }
 
@@ -6684,7 +6679,6 @@ inline void gcode_M109() {
     }
 
     idle();
- //   TFT_Commond_Scan();
     refresh_cmd_timeout(); // to prevent stepper_inactive_time from running out
 
     float temp = thermalManager.degHotend(target_extruder);
@@ -6859,7 +6853,6 @@ inline void gcode_M109() {
       #endif
       LCD_MESSAGEPGM(MSG_BED_DONE);}
     KEEPALIVE_STATE(IN_HANDLER);
-    
   }
 
 #endif // HAS_TEMP_BED
@@ -7804,7 +7797,6 @@ inline void gcode_M226() {
   }
 
 #endif // HAS_SERVOS
-
 
 #if HAS_BUZZER
 
@@ -9265,10 +9257,12 @@ void process_next_command() {
         gcode_G4();
         break;
 
+      //#if ENABLED(BEZIER_CURVE_SUPPORT)
         // G5
         case 5: // G5  - Cubic B_spline
           gcode_G5();
           break;
+      //#endif // BEZIER_CURVE_SUPPORT
 
       #if ENABLED(FWRETRACT)
         case 10: // G10: retract
@@ -11151,7 +11145,6 @@ void manage_inactivity(bool ignore_stepper_queue/*=false*/) {
   static unsigned int temp=0;
   temp++;
   if(temp>=10000){temp=0;Fan2Scan();Light_CON();}
-  
 
   #if ENABLED(FILAMENT_RUNOUT_SENSOR)
     if ((IS_SD_PRINTING || print_job_timer.isRunning()) && (READ(FIL_RUNOUT_PIN) == FIL_RUNOUT_INVERTING))
@@ -11432,16 +11425,16 @@ void PowerDown()
  *  - Print startup messages and diagnostics
  *  - Get EEPROM or default settings
  *  - Initialize managers for:
- *    β€?temperature
- *    β€?planner
- *    β€?watchdog
- *    β€?stepper
- *    β€?photo pin
- *    β€?servos
- *    β€?LCD controller
- *    β€?Digipot I2C
- *    β€?Z probe sled
- *    β€?status LEDs
+ *    αί?temperature
+ *    αί?planner
+ *    αί?watchdog
+ *    αί?stepper
+ *    αί?photo pin
+ *    αί?servos
+ *    αί?LCD controller
+ *    αί?Digipot I2C
+ *    αί?Z probe sled
+ *    αί?status LEDs
  */
 void setup() {
 
@@ -11495,8 +11488,6 @@ setupLED();
   SERIAL_ECHOLNPGM(SHORT_BUILD_VERSION);
   SERIAL_EOL;
 
-  
-
   #if defined(STRING_DISTRIBUTION_DATE) && defined(STRING_CONFIG_H_AUTHOR)
     SERIAL_ECHO_START;
     SERIAL_ECHOPGM(MSG_CONFIGURATION_VER);
@@ -11509,8 +11500,6 @@ setupLED();
   SERIAL_ECHOPAIR(MSG_FREE_MEMORY, freeMemory());
   SERIAL_ECHOLNPAIR(MSG_PLANNER_BUFFER_BYTES, (int)sizeof(block_t)*BLOCK_BUFFER_SIZE);
 
-
-  
   // Send "ok" after commands by default
   for (int8_t i = 0; i < BUFSIZE; i++) send_ok[i] = true;
 
@@ -11581,7 +11570,7 @@ setupLED();
     pinMode(RGB_LED_B_PIN, OUTPUT);
   #endif
   _delay_ms(20);
- PowerOnMusic(); 
+  PowerOnMusic(); 
   lcd_init();
   #if ENABLED(SHOW_BOOTSCREEN)
     #if ENABLED(DOGLCD)
@@ -11613,17 +11602,11 @@ setupLED();
   #endif
 
   SetUpFAN2_PIN();
-//  setuplevelTest();
   setupSDCARD(); 
   SetupFilament();
-   _delay_ms(10);  // wait 1sec to display the splash screen 
+  _delay_ms(10);  // wait 1sec to display the splash screen 
  
 }
-
-
-
-
-
 
 /**
  * The main Marlin program loop
@@ -11637,8 +11620,7 @@ setupLED();
  */
 void loop() {
   
-  if(pauseCMDsendflag)pauseCMDsend();//when pause,i need rase z axis,but if i use enquecommand_P,it maybe lose cmd,very dangerous,so i need sent cmd one by one
-//  if(PointTestFlag||Z_offset_debug_flag)MY_AUTOlevelAlarm();
+  if(pauseCMDsendflag) pauseCMDsend();//when pause,i need rase z axis,but if i use enquecommand_P,it maybe lose cmd,very dangerous,so i need sent cmd one by one
   
   if (commands_in_queue < BUFSIZE) get_available_commands();
 
@@ -11686,7 +11668,6 @@ void loop() {
   idle();
   #ifdef TFTmodel
   USBOnLineTest();
-//  if((AssistLeveTestflag==1)&&(commands_in_queue < BUFSIZE)){ AssistLevelTest();}
   if(TFTpausingFlag) //when pause sd printing,send "ok"to tft as read buffer carry out
   {
     stepper.synchronize();
